@@ -59,35 +59,35 @@ describe('Testing Users', () => {
     });
   });
 
-  // describe('[POST] /users', () => {
-  //   it('response Create User', async () => {
-  //     const userData: CreateUserDto = {
-  //       email: 'test@email.com',
-  //       password: 'q1w2e3r4',
-  //     };
+  describe('[POST] /users', () => {
+    it('response Create User', async () => {
+      const userData: CreateUserDto = {
+        email: 'test@email.com',
+        password: 'q1w2e3r48',
+      };
 
-  //     const usersRoute = new UserRoute();
-  //     const users = usersRoute.usersController.userService.users;
+      const usersRoute = new UserRoute();
+      const users = usersRoute.usersController.userService.users;
 
-  //     users.findOne = jest.fn().mockReturnValue(null);
-  //     users.create = jest.fn().mockReturnValue({
-  //       _id: '60706478aad6c9ad19a31c84',
-  //       email: userData.email,
-  //       password: await bcrypt.hash(userData.password, 10),
-  //     });
+      users.findOne = jest.fn().mockReturnValue(null);
+      users.create = jest.fn().mockReturnValue({
+        _id: '60706478aad6c9ad19a31c84',
+        email: userData.email,
+        password: await bcrypt.hash(userData.password, 10),
+      });
 
-  //     (mongoose as any).connect = jest.fn();
-  //     const app = new App([usersRoute]);
-  //     return request(app.getServer()).post(`${usersRoute.path}`).send(userData).expect(201);
-  //   });
-  // });
+      (mongoose as any).connect = jest.fn();
+      const app = new App([usersRoute]);
+      return request(app.getServer()).post(`${usersRoute.path}`).send(userData).expect(201);
+    });
+  });
 
   describe('[PUT] /users/:id', () => {
     it('response Update User', async () => {
       const userId = '60706478aad6c9ad19a31c84';
       const userData: CreateUserDto = {
         email: 'test@email.com',
-        password: 'q1w2e3r4',
+        password: 'q1w2e3r48',
       };
 
       const usersRoute = new UserRoute();

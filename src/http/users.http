@@ -7,7 +7,7 @@ GET {{ baseURL }}/users
 
 ###
 # Find User By Id
-GET {{ baseURL }}/users/1
+GET {{ baseURL }}/users/65e588927cad7be7702edbd4
 
 ###
 # Create User
@@ -16,7 +16,7 @@ Content-Type: application/json
 
 {
     "email": "example@email.com",
-    "password": "password"
+    "password": "password1"
 }
 
 ###
@@ -26,7 +26,7 @@ Content-Type: application/json
 
 {
     "email": "example@email.com",
-    "password": "password"
+    "password": "password1"
 }
 
 ###
