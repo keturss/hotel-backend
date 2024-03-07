@@ -1,5 +1,5 @@
 # RESTful API Node Server Hotel Booking
-
+![workflow](https://github.com/keturss/hotel-backend/actions/workflows/backend.yml/badge.svg)
 
 A School project RESTful APIs using Node.js, Express, and Mongoose.
 
