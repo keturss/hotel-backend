@@ -4,10 +4,41 @@ import request from 'supertest';
 import { App } from '@/app';
 import { CreateUserDto } from '@dtos/users.dto';
 import { UserRoute } from '@routes/users.route';
+import Roles from '@/roles/roles';
+import { AuthRoute } from '@/routes/auth.route';
 
+let cookieToken;
 afterAll(async () => {
   await new Promise<void>(resolve => setTimeout(() => resolve(), 500));
   await mongoose.connection.close();
+});
+
+beforeAll(async () => {
+  const userData: CreateUserDto = {
+    email: 'test@email.com',
+    password: 'q1w2e3r4!',
+    role: Roles.ADMIN,
+  };
+  const authRoute = new AuthRoute();
+  const users = authRoute.authController.authService.users;
+
+  users.findOne = jest.fn().mockReturnValue({
+    _id: '60706478aad6c9ad19a31c84',
+    email: userData.email,
+    password: await bcrypt.hash(userData.password, 10),
+    role: Roles.ADMIN,
+  });
+
+  (mongoose as any).connect = jest.fn();
+  const app = new App([authRoute]);
+  await request(app.getServer())
+    .post(`${authRoute.path}login`)
+    .send(userData)
+    .then(response => {
+      const cookies = response.headers['set-cookie'];
+      console.log(cookies); // Log the cookies
+      cookieToken = cookies;
+    });
 });
 
 describe('Testing Users', () => {
@@ -36,7 +67,7 @@ describe('Testing Users', () => {
 
       (mongoose as any).connect = jest.fn();
       const app = new App([usersRoute]);
-      return request(app.getServer()).get(`${usersRoute.path}`).expect(200);
+      return request(app.getServer()).get(`${usersRoute.path}`).set('Cookie', cookieToken).expect(200);
     });
   });
 
@@ -55,7 +86,7 @@ describe('Testing Users', () => {
 
       (mongoose as any).connect = jest.fn();
       const app = new App([usersRoute]);
-      return request(app.getServer()).get(`${usersRoute.path}/${userId}`).expect(200);
+      return request(app.getServer()).get(`${usersRoute.path}/${userId}`).set('Cookie', cookieToken).expect(200);
     });
   });
 
@@ -64,6 +95,7 @@ describe('Testing Users', () => {
       const userData: CreateUserDto = {
         email: 'test@email.com',
         password: 'q1w2e3r48',
+        role: Roles.ADMIN,
       };
 
       const usersRoute = new UserRoute();
@@ -88,6 +120,7 @@ describe('Testing Users', () => {
       const userData: CreateUserDto = {
         email: 'test@email.com',
         password: 'q1w2e3r48',
+        role: Roles.ADMIN,
       };
 
       const usersRoute = new UserRoute();
@@ -109,7 +142,7 @@ describe('Testing Users', () => {
 
       (mongoose as any).connect = jest.fn();
       const app = new App([usersRoute]);
-      return request(app.getServer()).put(`${usersRoute.path}/${userId}`).send(userData);
+      return request(app.getServer()).put(`${usersRoute.path}/${userId}`).set('Cookie', cookieToken).send(userData).expect(200);
     });
   });
 
@@ -128,7 +161,7 @@ describe('Testing Users', () => {
 
       (mongoose as any).connect = jest.fn();
       const app = new App([usersRoute]);
-      return request(app.getServer()).delete(`${usersRoute.path}/${userId}`).expect(200);
+      return request(app.getServer()).delete(`${usersRoute.path}/${userId}`).set('Cookie', cookieToken).expect(200);
     });
   });
 });

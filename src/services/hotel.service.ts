@@ -1,4 +1,3 @@
-import { hash } from 'bcrypt';
 import { Service } from 'typedi';
 import { HttpException } from '@/exceptions/httpException';
 import { Hotel } from '@interfaces/hotel.interface';
@@ -7,7 +6,7 @@ import { HotelModel } from '@models/hotel.model';
 @Service()
 export class HotelService {
   public hotels = HotelModel;
-  
+
   public async findAllHotel(): Promise<Hotel[]> {
     const hotel: Hotel[] = await HotelModel.find();
     return hotel;
@@ -24,7 +23,7 @@ export class HotelService {
     const findHotel: Hotel = await HotelModel.findOne({ name: HotelData.name });
     if (findHotel) throw new HttpException(409, `This name ${HotelData.name} already exists`);
 
-    const createHotelData: Hotel = await HotelModel.create({ ...HotelData});
+    const createHotelData: Hotel = await HotelModel.create({ ...HotelData });
 
     return createHotelData;
   }

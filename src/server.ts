@@ -7,6 +7,6 @@ import { BookingRoute } from './routes/booking.route';
 
 ValidateEnv();
 
-const app = new App([new UserRoute(), new AuthRoute(), new HotelRoute(),new BookingRoute()]);
+const app = new App([new UserRoute(), new AuthRoute(), new HotelRoute(), new BookingRoute()]);
 
 app.listen();

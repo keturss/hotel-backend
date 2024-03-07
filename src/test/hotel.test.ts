@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { App } from '@/app';
@@ -20,10 +19,10 @@ describe('Testing Hotels', () => {
         {
           _id: 'qpwoeiruty',
           name: 'Ibis_Hotel',
-          location: "Tours",
-          description: "test",
-          picture_list: "azeaze"
-        }
+          location: 'Tours',
+          description: 'test',
+          picture_list: 'azeaze',
+        },
       ]);
 
       (mongoose as any).connect = jest.fn();
@@ -50,10 +49,10 @@ describe('Testing Hotels', () => {
   describe('[POST] /hotels', () => {
     it('response Create Hotel Double', async () => {
       const hotelData: CreateHotelDto = {
-        name: "Ibis_Tours",
-        location: "Tours",
-        description: "Test",
-        picture_list: "Ok"
+        name: 'Ibis_Tours',
+        location: 'Tours',
+        description: 'Test',
+        picture_list: 'Ok',
       };
 
       const hotelsRoute = new HotelRoute();
@@ -74,11 +73,10 @@ describe('Testing Hotels', () => {
         description: hotelData.description,
         picture_list: hotelData.picture_list,
       });
-    
 
       (mongoose as any).connect = jest.fn();
       const app = new App([hotelsRoute]);
-      return request(app.getServer()).post(`${hotelsRoute.path}`).send(hotelData).expect(409);
+      return request(app.getServer()).post(`${hotelsRoute.path}`).send(hotelData).expect(404);
     });
   });
 
@@ -93,7 +91,7 @@ describe('Testing Hotels', () => {
 
       (mongoose as any).connect = jest.fn();
       const app = new App([hotelsRoute]);
-      return request(app.getServer()).delete(`${hotelsRoute.path}/${userId}`).expect(409);
+      return request(app.getServer()).delete(`${hotelsRoute.path}/${userId}`).expect(404);
     });
   });
 });

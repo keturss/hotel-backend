@@ -1,4 +1,4 @@
-import { connect, set} from 'mongoose';
+import { connect, set } from 'mongoose';
 import { NODE_ENV, DB_HOST, DB_PORT, DB_DATABASE } from '@config';
 
 export const dbConnection = async () => {
@@ -6,7 +6,7 @@ export const dbConnection = async () => {
     url: `mongodb://${DB_HOST}:${DB_PORT}/${DB_DATABASE}`,
     options: {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     },
   };
 
@@ -15,4 +15,4 @@ export const dbConnection = async () => {
   }
 
   await connect(dbConfig.url);
-}
+};

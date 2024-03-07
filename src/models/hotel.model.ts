@@ -17,8 +17,8 @@ const HotelSchema: Schema = new Schema({
   },
   picture_list: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 export const HotelModel = model<Hotel & Document>('Hotel', HotelSchema);

@@ -13,7 +13,7 @@ const BookingSchema: Schema = new Schema({
   date: {
     type: Date,
     required: true,
-  }
+  },
 });
 
 export const BookingModel = model<Booking & Document>('Booking', BookingSchema);
