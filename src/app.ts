@@ -74,7 +74,7 @@ export class App {
           description: 'Example docs',
         },
       },
-      apis: ['swagger.yaml'],
+      apis: ['./src/routes/*.route.ts'],
     };
 
     const specs = swaggerJSDoc(options);
